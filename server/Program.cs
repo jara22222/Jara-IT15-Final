@@ -1,5 +1,6 @@
 using Scalar.AspNetCore;
 using server.data;
+using server.data.DbSeeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(
     options=>   options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
 // Inside Program.cs before builder.Build()
 builder.Services.AddScoped<Server.Services.TokenService>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -39,6 +41,25 @@ var app = builder.Build();
 app.UseAuthentication(); 
 app.UseAuthorization();
 app.MapControllers();
+
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        // Ensure the database is created before seeding
+        await context.Database.MigrateAsync(); 
+        // Run the seeder
+        await DbSeeders.SeedAsync(context);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"--> Error during startup: {ex.Message}");
+    }
+}
 
 
 // Configure the HTTP request pipeline.

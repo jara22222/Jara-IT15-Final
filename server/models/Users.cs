@@ -19,6 +19,11 @@ namespace server.models
         public string Lastname { get; set; } = string.Empty;
         [MaxLength(50)]
         public string Username { get; set; } = string.Empty;
+        [EmailAddress]
+        [MaxLength(50)]
+        public string Email { get; set; } = string.Empty;
+        [MaxLength(11)]
+        public string Phonenumber { get; set; } = string.Empty;
         [MaxLength(255)]
         public string Password { get; set; } = string.Empty;
         [MaxLength(50)]

@@ -35,9 +35,34 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-builder.Services.AddAuthorization();
-var app = builder.Build();
+builder.Services.AddAuthorization();    
 
+
+
+
+var KicksLogixCorsPolicy = "_kicksLogixCorsPolicy";
+
+// 2. Add the CORS service to the builder
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: KicksLogixCorsPolicy,
+        policy =>
+        {
+            policy.WithOrigins(
+                    "http://localhost:5173", // Your local Vite React server
+                    "http://localhost:3000", // Just in case you use port 3000
+                    "https://your-project.vercel.app" // Add your future Vercel URL here!
+                )
+                .AllowAnyHeader() // Allows your Authorization Bearer token!
+                .AllowAnyMethod() // Allows POST, GET, PUT, DELETE
+                .AllowCredentials(); // Required if you use cookies later
+        });
+});
+
+
+
+var app = builder.Build();
+app.UseCors(KicksLogixCorsPolicy);
 app.UseAuthentication(); 
 app.UseAuthorization();
 app.MapControllers();

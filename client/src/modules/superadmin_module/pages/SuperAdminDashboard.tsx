@@ -5,7 +5,7 @@ function SuperAdminDashboard() {
   const logout = useAuthStore((s) => s.logout);
   const toke = useAuthStore((s) => s.token);
   return (
-    <div>
+    <div className="break-all text-sm">
       {toke}
       <Button onClick={logout}>Logout</Button>
     </div>

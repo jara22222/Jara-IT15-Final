@@ -14,6 +14,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
@@ -88,6 +89,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       {/* Footer remains the same with your Profile dropdown */}
+      <SidebarFooter>asdasd</SidebarFooter>
     </Sidebar>
   );
 }

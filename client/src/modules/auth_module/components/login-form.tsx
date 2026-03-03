@@ -10,10 +10,11 @@ import {
   FieldLabel,
   FieldSeparator,
 } from "../../../shared/ui/field";
-import { Input } from "../../../shared/ui/input"; 
+import { Input } from "../../../shared/ui/input";
 import { useAuthStore } from "../store/useAuth";
 import { useMutation } from "@tanstack/react-query";
 import api from "../api/axios";
+import { useNavigate } from "react-router";
 export function LoginFormz({
   className,
   ...props
@@ -41,7 +42,7 @@ export function LoginFormz({
   const [passwordError, setPasswordError] = useState([]);
 
   const setAuth = useAuthStore((state) => state.setAuth);
-
+  const navigate = useNavigate();
   const { mutate, isPending } = useMutation<
     LoginResponse,
     any,
@@ -56,6 +57,14 @@ export function LoginFormz({
       setUsernameError("");
       setPasswordError([]);
       setMessageError("");
+
+      switch (data.user?.role) {
+        case "SuperAdmin":
+          navigate("/superadmin/dashboard", { replace: true });
+          break;
+        default:
+          navigate("/login", { replace: true });
+      }
     },
     onError: (error: any) => {
       const data = error.response?.data;
@@ -115,7 +124,7 @@ export function LoginFormz({
                   style={{ whiteSpace: "pre-line" }}
                   className="text-[12px] tex text-red-500"
                 >
-                  {passwordError.join(`\n`)}
+                  {passwordError?.join(`\n`)}
                   {messageError}
                 </span>
               </Field>

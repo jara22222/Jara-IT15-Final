@@ -8,11 +8,18 @@ export default function SuperAdminlAyout() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
-        <Suspense fallback={<Loader />}>
-          <Outlet />
-        </Suspense>
+
+      <main className="flex-1 min-w-0 overflow-hidden">
+        <header>
+          <SidebarTrigger />  
+        </header>
+        <section className="p-5">
+          <Suspense fallback={<Loader />}>
+            <div className="max-w-full">
+              <Outlet />
+            </div>
+          </Suspense>
+        </section>
       </main>
     </SidebarProvider>
   );

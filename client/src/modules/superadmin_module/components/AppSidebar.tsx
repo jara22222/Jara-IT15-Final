@@ -3,8 +3,10 @@ import {
   Footprints,
   Home,
   User2,
-  Users,
-  ShieldCheck,
+  PlusIcon,
+  ListCheck,
+  ArchiveIcon,
+  Logs,
 } from "lucide-react";
 import {
   Collapsible,
@@ -24,8 +26,11 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "../../../shared/ui/sidebar";
+import { Button } from "../../../shared/ui/button";
+import { useAuthStore } from "../../auth_module/store/useAuth";
 
 export function AppSidebar() {
+  const logout = useAuthStore((s) => s.logout);
   return (
     <Sidebar className="text-primary" variant="sidebar" collapsible="icon">
       <SidebarHeader className="flex items-center px-4 py-6 flex-row gap-2">
@@ -43,7 +48,7 @@ export function AppSidebar() {
             {/* 1. Normal Dashboard Link */}
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Dashboard">
-                <a href="/dashboard">
+                <a href="dashboard">
                   <Home />
                   <span>Dashboard</span>
                 </a>
@@ -65,18 +70,27 @@ export function AppSidebar() {
                   <SidebarMenuSub>
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/users/list">
-                          <Users className="size-4 mr-2" />
-                          <span>User List</span>
+                        <a href="addbranchmanagers">
+                          <PlusIcon className="size-4 mr-2" />
+                          <span>Add Branch Manager</span>
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
 
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton asChild>
-                        <a href="/users/roles">
-                          <ShieldCheck className="size-4 mr-2" />
-                          <span>Roles & Permissions</span>
+                        <a href="viewbranchmanagers">
+                          <ListCheck className="size-4 mr-2" />
+                          <span>View Branch Managers</span>
+                        </a>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton asChild>
+                        <a href="superadmin/usermanager/archived">
+                          <ArchiveIcon className="size-4 mr-2" />
+                          <span>Archived</span>
                         </a>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
@@ -85,11 +99,19 @@ export function AppSidebar() {
               </SidebarMenuItem>
             </Collapsible>
           </SidebarMenu>
+
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="AuditLogs">
+              <a href="/">
+                <Logs />
+                <span>AuditLog</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarGroup>
       </SidebarContent>
 
       {/* Footer remains the same with your Profile dropdown */}
-      <SidebarFooter>asdasd</SidebarFooter>
     </Sidebar>
   );
 }

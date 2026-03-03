@@ -67,18 +67,24 @@ export function LoginFormz({
       }
     },
     onError: (error: any) => {
-      const data = error.response?.data;
       setUsernameError("");
       setPasswordError([]);
       setMessageError("");
-      if (data) {
+      if (error.response) {
+        const data = error.response.data;
         if (data.errors) {
-          setUsernameError(data?.errors.Username);
-          setPasswordError(data?.errors.Password);
+          setUsernameError(data.errors.Username);
+          setPasswordError(data.errors.Password);
         }
         if (data.message) {
           setMessageError(data.message);
         }
+      } else if (error.request) {
+        setMessageError(
+          "Unable to connect to the server. Please try again later",
+        );
+      } else {
+        setMessageError("An unexpected error occurred.");
       }
     },
   });

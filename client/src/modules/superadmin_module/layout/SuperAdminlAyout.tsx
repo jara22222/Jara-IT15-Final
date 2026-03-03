@@ -1,8 +1,9 @@
 import { Suspense } from "react";
-import { SidebarProvider, SidebarTrigger } from "../../../shared/ui/sidebar";
+
 import { Outlet } from "react-router";
 import { Loader } from "lucide-react";
 import { AppSidebar } from "../components/AppSidebar";
+import { SidebarProvider } from "../../../shared/ui/sidebar";
 
 export default function SuperAdminlAyout() {
   return (
@@ -10,10 +11,7 @@ export default function SuperAdminlAyout() {
       <AppSidebar />
 
       <main className="flex-1 min-w-0 overflow-hidden">
-        <header>
-          <SidebarTrigger />  
-        </header>
-        <section className="p-5">
+        <section>
           <Suspense fallback={<Loader />}>
             <div className="max-w-full">
               <Outlet />

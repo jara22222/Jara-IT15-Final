@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
 namespace server.models
@@ -11,11 +7,11 @@ namespace server.models
         [Key]
         [MaxLength(36)]
         public string UserId { get; set; } = Guid.NewGuid().ToString();
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string Firstname { get; set; } = string.Empty;
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string Middlename { get; set; } = string.Empty;
-        [MaxLength(20)]
+        [MaxLength(30)]
         public string Lastname { get; set; } = string.Empty;
         [MaxLength(50)]
         public string Username { get; set; } = string.Empty;
